@@ -3,6 +3,7 @@
 Ce projet implémente une API CRUD pour gérer des produits en utilisant **AWS SAM** (Serverless Application Model). L'architecture repose sur **API Gateway, AWS Lambda et Amazon DynamoDB**.
 
 ## 📌 Architecture
+![Architecture AWS SAM](docs/schema.png)
 
 L'architecture suit le schéma suivant :
 - **Amazon API Gateway** : Expose les endpoints REST pour l'accès utilisateur.
