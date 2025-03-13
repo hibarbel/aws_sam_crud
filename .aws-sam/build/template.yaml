@@ -1,0 +1,89 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Creation of CRUD application using AWS SAM
+Resources:
+  DynamoDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: Produits
+      AttributeDefinitions:
+      - AttributeName: UserId
+        AttributeType: S
+      KeySchema:
+      - AttributeName: UserId
+        KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+  LambdafunctionGet:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.12
+      CodeUri: LambdafunctionGet
+      Handler: recuperer.handler
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: DynamoDBTable
+      Events:
+        MyApiCReate:
+          Type: Api
+          Properties:
+            Path: /produits/{id}
+            Method: get
+    Metadata:
+      SamResourceId: LambdafunctionGet
+  LambdafunctionUpdate:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.12
+      CodeUri: LambdafunctionUpdate
+      Handler: update.handler
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: DynamoDBTable
+      Events:
+        MyApiCReate:
+          Type: Api
+          Properties:
+            Path: /produits/{id}
+            Method: put
+    Metadata:
+      SamResourceId: LambdafunctionUpdate
+  LambdafunctionCreate:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.12
+      CodeUri: LambdafunctionCreate
+      Handler: create.handler
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: DynamoDBTable
+      Events:
+        MyApiCReate:
+          Type: Api
+          Properties:
+            Path: /produits
+            Method: post
+    Metadata:
+      SamResourceId: LambdafunctionCreate
+  LambdafunctionDelete:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.12
+      CodeUri: LambdafunctionDelete
+      Handler: remove.handler
+      Policies:
+      - DynamoDBCrudPolicy:
+          TableName:
+            Ref: DynamoDBTable
+      Events:
+        MyApiRemove:
+          Type: Api
+          Properties:
+            Path: /produits/{id}
+            Method: delete
+    Metadata:
+      SamResourceId: LambdafunctionDelete
