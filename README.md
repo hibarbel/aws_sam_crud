@@ -4,6 +4,7 @@ Ce projet implémente une API CRUD pour gérer des produits en utilisant **AWS S
 
 ## 📌 Architecture
 
+![Screenshot 01](architecture/image.png "architecture")
 
 L'architecture suit le schéma suivant :
 - **Amazon API Gateway** : Expose les endpoints REST pour l'accès utilisateur.
